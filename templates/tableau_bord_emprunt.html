@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de Bord des Emprunts{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+
+    <div class="container">
+        <h1>Tableau de bord des emprunts</h1>
+
+        <!-- Bouton pour ajouter un emprunt -->
+        <a href="{{ url_for('ajouter_emprunt') }}" class="btn btn-primary mb-3">Ajouter un emprunt</a>
+
+        <!-- Tableau des emprunts -->
+        <table id="empruntsTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Abonné</th>
+                    <th>Document</th>
+                    <th>Date d'emprunt</th>
+                    <th>Date retour prévue</th>
+                    <th>Statut</th>
+                    <th>Actions</th>  <!-- Nouvelle colonne pour les actions -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for emprunt in emprunts %}
+                <tr>
+                    <td>{{ emprunt['_id'] }}</td>
+                    <td>{{ emprunt['abonne_nom'] }}</td>
+                    <td>{{ emprunt['document_titre'] }}</td>
+                    <td>{{ emprunt['date_emprunt'] }}</td>
+                    <td>{{ emprunt.get('date_retour_prevue', 'Non défini') }}</td>
+                    <td>{{ emprunt['statut'] }}</td>
+                    <td>
+                        <!-- Lien pour modifier l'emprunt -->
+                        <a href="{{ url_for('modifier_emprunt', emprunt_id=emprunt['_id']) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        
+                        <!-- Lien pour supprimer l'emprunt -->
+                        <a href="{{ url_for('supprimer_emprunt', emprunt_id=emprunt['_id']) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet emprunt ?');">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Graphiques -->
+        <div style="display: flex; justify-content: space-around; margin-top: 50px;">
+            <canvas id="inProgressChart" width="200" height="200"></canvas>
+            <canvas id="returnedChart" width="200" height="200"></canvas>
+            <canvas id="delayedChart" width="200" height="200"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let enCours = 0, retourne = 0, retarde = 0;
+
+            // Récupération des statuts directement depuis le tableau HTML
+            document.querySelectorAll('#empruntsTable tbody tr').forEach(row => {
+                const statut = row.cells[4].textContent.trim();
+                if (statut === 'En cours') enCours++;
+                if (statut === 'Retourne') retourne++;
+                if (statut === 'Retarde') retarde++;
+            });
+
+            // Générer les graphiques
+            generateChart('inProgressChart', 'Emprunts en cours', enCours, enCours, '#4caf50');
+            generateChart('returnedChart', 'Emprunts retournés', retourne, retourne, '#007bff');
+            generateChart('delayedChart', 'Retards', retarde, retarde, '#f44336');
+
+            // Fonction pour générer les graphiques circulaires
+            function generateChart(canvasId, label, value, total, color) {
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: [label, 'Autres'],
+                        datasets: [{
+                            data: [value, total - value],
+                            backgroundColor: [color, '#f4f4f4'],
+                        }]
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

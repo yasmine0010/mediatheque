@@ -1,0 +1,45 @@
+
+/* Styliser les liens dans la sidebar */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    background-color: #343a40;
+    color: white;
+    position: fixed;
+    width: 250px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+}
+/* Espacement des liens dans la sidebar */
+.sidebar a {
+    color: #adb5bd;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    font-weight: 500;
+    margin-bottom: 10px; /* Ajoutez de l'espace entre chaque lien */
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+    color: white;
+}
+.sidebar img {
+    width: 100px; /* Taille de l'image */
+    height: auto; /* Pour garder les proportions de l'image */
+    border-radius: 50%; /* Si vous voulez une bordure ronde */
+    margin-bottom: 20px; /* Un peu d'espace sous l'image */
+    display: block; /* S'assurer que l'image est un bloc */
+    margin-left: auto; /* Centrer horizontalement si nécessaire */
+    margin-right: auto; /* Centrer horizontalement si nécessaire */
+    background-color: #fff; /* Fond blanc temporaire pour tester */
+    border: 2px solid #fff; /* Bordure blanche autour de l'image */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Ombre blanche autour de l'image */
+    z-index: 9999; /* Assurez-vous que l'image soit au-dessus des autres éléments */
+}
+

@@ -1,0 +1,32 @@
+<!-- Formulaire Modal -->
+<div id="addFormModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:20px;">
+        <h3>Ajouter un abonné</h3>
+        <form action="/abonnees/create" method="POST">
+            <div class="mb-3">
+                <label for="nom">Nom :</label>
+                <input type="text" name="nom" id="nom" required>
+
+                <label for="prenom">Prénom :</label>
+                <input type="text" name="prenom" id="prenom" required>
+
+                <label for="adresse">Adresse :</label>
+                <input type="text" name="adresse" id="adresse" required>
+
+                <label for="date_inscription">Date d'inscription :</label>
+                <input type="date" name="date_inscription" id="date_inscription" required>
+
+                <!-- Liste des emprunts en cours -->
+                <label for="liste_d_emprunts_en_cours">Liste d'emprunts en cours :</label>
+                <textarea name="liste_d_emprunts_en_cours" id="liste_d_emprunts_en_cours"></textarea>
+
+                <!-- Historique des emprunts -->
+                <label for="historique_d_emprunts">Historique d'emprunts :</label>
+                <textarea name="historique_d_emprunts" id="historique_d_emprunts"></textarea>
+
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <a href="/abonnees" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>

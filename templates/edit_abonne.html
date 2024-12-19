@@ -1,0 +1,52 @@
+<form action="/abonnees/edit/{{ abonne._id }}" method="POST">
+    <div class="mb-3">
+        <label for="nom">Nom :</label>
+        <input type="text" name="nom" id="nom" value="{{ abonne.nom }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="prenom">Prénom :</label>
+        <input type="text" name="prenom" id="prenom" value="{{ abonne.prenom }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="adresse">Adresse :</label>
+        <input type="text" name="adresse" id="adresse" value="{{ abonne.adresse }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="date_inscription">Date d'inscription :</label>
+        <input type="date" name="date_inscription" id="date_inscription" value="{{ abonne.date_inscription }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="liste_d_emprunts_en_cours">Liste d'emprunts en cours :</label>
+        <select name="liste_d_emprunts_en_cours" id="liste_d_emprunts_en_cours" multiple>
+            {% if documents_en_cours %}
+                {% for emprunt in documents_en_cours %}
+                    <option value="{{ emprunt }}" {% if emprunt in abonne.liste_d_emprunts_en_cours %}selected{% endif %}>{{ emprunt }}</option>
+                {% endfor %}
+            {% else %}
+                <option disabled>Aucun emprunt en cours</option>
+            {% endif %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="historique_d_emprunts">Historique d'emprunts :</label>
+        <select name="historique_d_emprunts" id="historique_d_emprunts" multiple>
+            {% if historique_d_emprunts %}
+                {% for emprunt in historique_d_emprunts %}
+                    <option value="{{ emprunt }}" {% if emprunt in abonne.historique_d_emprunts %}selected{% endif %}>{{ emprunt }}</option>
+                {% endfor %}
+            {% else %}
+                <option disabled>Aucun historique</option>
+            {% endif %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <a href="/abonnees" class="btn btn-secondary">Annuler</a>
+    </div>
+</form>

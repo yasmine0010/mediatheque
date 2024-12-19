@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un emprunt</title>
+</head>
+<body>
+    <h1>Ajouter un emprunt</h1>
+    <form method="POST">
+        <label for="abonne_id">Abonné</label>
+        <select name="abonne_id" id="abonne_id">
+            {% for abonne in abonnes %}
+            <option value="{{ abonne['_id'] }}">{{ abonne['nom'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="document_id">Document</label>
+        <select name="document_id" id="document_id">
+            {% for document in documents %}
+            <option value="{{ document['_id'] }}">{{ document['titre'] }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="date_emprunt">Date d'emprunt</label>
+        <input type="datetime-local" name="date_emprunt" required>
+
+        <label for="date_retour_prevue">Date de retour prévue</label>
+        <input type="datetime-local" name="date_retour_prevue" required>
+
+        <label for="statut">Statut</label>
+        <select name="statut" id="statut">
+            <option value="En cours">En cours</option>
+            <option value="Retourne">Retourne</option>
+            <option value="Emprunte">Emprunte</option>
+        </select>
+
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>

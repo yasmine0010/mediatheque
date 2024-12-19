@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Emprunt</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <a href="/abonnees">Abonnés</a>
+        <a href="/catalogue">Catalogue</a>
+        <a href="/emprunts" class="active">Emprunts</a>
+    </div>
+
+    <div class="content">
+        <h1>Modifier un Emprunt</h1>
+        <form action="/emprunts/modifier/{{ emprunt.id }}" method="POST">
+            <label for="abonne_id">Abonné :</label>
+            <select id="abonne_id" name="abonne_id" required>
+                {% for abonne in abonnes %}
+                <option value="{{ abonne.id }}" {% if abonne.id == emprunt.abonne_id %}selected{% endif %}>
+                    {{ abonne.nom }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <label for="document_id">Document :</label>
+            <select id="document_id" name="document_id" required>
+                {% for document in documents %}
+                <option value="{{ document.id }}" {% if document.id == emprunt.document_id %}selected{% endif %}>
+                    {{ document.titre }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <label for="date_emprunt">Date d'Emprunt :</label>
+            <input type="date" id="date_emprunt" name="date_emprunt" value="{{ emprunt.date_emprunt }}" required>
+
+            <label for="date_retour_prevue">Date de Retour Prévue :</label>
+            <input type="date" id="date_retour_prevue" name="date_retour_prevue" value="{{ emprunt.date_retour_prevue }}" required>
+
+            <label for="statut">Statut :</label>
+            <select id="statut" name="statut">
+                <option value="En cours" {% if emprunt.statut == 'En cours' %}selected{% endif %}>En cours</option>
+                <option value="Terminé" {% if emprunt.statut == 'Terminé' %}selected{% endif %}>Terminé</option>
+            </select>
+
+            <button type="submit" class="btn">Enregistrer</button>
+            <a href="/emprunts" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+</body>
+</html>

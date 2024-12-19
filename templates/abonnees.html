@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Abonnés - Médiathèque{% endblock %}
+
+{% block content %}
+<h2>Liste des Abonnés</h2>
+
+<!-- Bouton pour ouvrir le formulaire modal -->
+<button class="btn btn-primary" onclick="openAddForm()">Ajouter un abonné</button>
+
+<!-- Tableau des abonnés -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Adresse</th>
+            <th>Date inscription</th>
+            <th>Liste d'emprunts en cours</th>
+            <th>Historique d'emprunts</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for abonne in abonnees %}
+        <tr>
+            <td>{{ abonne.nom }}</td>
+            <td>{{ abonne.prenom }}</td>
+            <td>{{ abonne.adresse }}</td>
+            <td>{{ abonne.date_inscription }}</td>
+
+            <td>
+                {% if abonne.liste_emprunts %}
+                    <ul>
+                        {% for emprunt in abonne.liste_emprunts %}
+                        <li>
+                            Livre: {{ emprunt.livre_titre }}<br>
+                            Date d'emprunt: {{ emprunt.date_emprunt }}<br>
+                            Date de retour: {{ emprunt.date_retour }}<br>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Aucun emprunt en cours
+                {% endif %}
+            </td>
+
+            <td>
+                {% if abonne.historique_emprunts %}
+                    <ul>
+                        {% for historique in abonne.historique_emprunts %}
+                        <li>
+                            Livre: {{ historique.livre_titre }}<br>
+                            Date d'emprunt: {{ historique.date_emprunt }}<br>
+                            Date de retour: {{ historique.date_retour }}<br>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Aucun historique
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="/abonnees/edit/{{ abonne._id }}" class="btn btn-warning">Modifier</a>
+                <a href="/abonnees/delete/{{ abonne._id }}" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Inclure ici le formulaire d'ajout -->
+{% include 'add_form.html' %}
+
+<script>
+    function openAddForm() {
+        document.getElementById('addFormModal').style.display = 'block';
+    }
+
+    function closeAddForm() {
+        document.getElementById('addFormModal').style.display = 'none';
+    }
+</script>
+
+{% endblock %}

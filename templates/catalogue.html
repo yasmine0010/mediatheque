@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Catalogue - Médiathèque{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Catalogue des Ressources</h2>
+
+    <!-- Lien pour ajouter un nouveau document -->
+    <a href="/catalogue/add" class="btn btn-primary">Ajouter un Document</a>
+
+    <!-- Tableau pour afficher les documents -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Type</th>
+                <th>Auteur</th>
+                <th>Date de Publication</th>
+                <th>Disponibilité</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td>{{ document.titre }}</td>
+                    <td>{{ document.type }}</td>
+                    <td>{{ document.auteur }}</td>
+                    <td>{{ document.date_publication }}</td>
+                    <td>{{ document.disponibilite }}</td>
+                    <td>
+                        <a href="/catalogue/edit/{{ document._id }}" class="btn btn-warning">Editer</a>
+                        <a href="/catalogue/delete/{{ document._id }}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

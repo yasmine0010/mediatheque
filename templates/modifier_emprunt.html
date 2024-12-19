@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un emprunt</title>
+</head>
+<body>
+    <h1>Modifier un emprunt</h1>
+    <form method="POST">
+        <label for="statut">Statut</label>
+        <select name="statut" id="statut">
+            <option value="En cours" {% if emprunt['statut'] == 'En cours' %}selected{% endif %}>En cours</option>
+            <option value="Retourne" {% if emprunt['statut'] == 'Retourne' %}selected{% endif %}>Retourne</option>
+            <option value="Emprunte" {% if emprunt['statut'] == 'Emprunte' %}selected{% endif %}>Emprunte</option>
+        </select>
+
+        <label for="date_retour_prevue">Date de retour prévue</label>
+        <input type="datetime-local" name="date_retour_prevue" value="{{ emprunt['date_retour_prevue'].strftime('%Y-%m-%dT%H:%M') }}" required>
+
+        <button type="submit">Mettre à jour</button>
+    </form>
+</body>
+</html>

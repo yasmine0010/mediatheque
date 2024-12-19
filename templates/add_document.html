@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un Document{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Ajouter un Nouveau Document</h2>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="titre">Titre</label>
+            <input type="text" class="form-control" id="titre" name="titre" required>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" class="form-control" id="type" name="type" required>
+        </div>
+        <div class="form-group">
+            <label for="auteur">Auteur</label>
+            <input type="text" class="form-control" id="auteur" name="auteur" required>
+        </div>
+        <div class="form-group">
+            <label for="date_publication">Date de Publication</label>
+            <input type="date" class="form-control" id="date_publication" name="date_publication" required>
+        </div>
+        <div class="form-group">
+            <label for="disponibilite">Disponibilité</label>
+            <select class="form-control" id="disponibilite" name="disponibilite" required>
+                <option value="Disponible">Disponible</option>
+                <option value="Indisponible">Indisponible</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+/* Styles pour le tableau */
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Styles pour la sidebar */
+.sidebar {
+    background-color: #007bff;
+    padding: 15px;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: white;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.sidebar a:hover {
+    background-color: #0056b3;
+}
+
+/* Styles pour le contenu */
+.container {
+    margin-left: 270px;  /* espace pour la sidebar */
+    padding: 20px;
+}

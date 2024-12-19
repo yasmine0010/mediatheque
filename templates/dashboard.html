@@ -1,0 +1,67 @@
+o
+
+{% extends 'base.html' %}
+
+{% block title %}Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Tableau de Bord des Emprunts</h1>
+
+    <!-- Graphique des statuts des emprunts -->
+    <div style="width: 50%; display: inline-block;">
+        <h3>Statut des Documents</h3>
+        <canvas id="statusChart"></canvas>
+    </div>
+
+    <!-- Graphique des statistiques par type d'abonné -->
+    <div style="width: 50%; display: inline-block;">
+        <h3>Statistiques par Type d'Abonnés</h3>
+        <canvas id="abonneChart"></canvas>
+    </div>
+</div>
+
+<!-- Inclure Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Récupérer les données depuis Flask pour les statuts des documents
+    const statusData = {
+        labels: ['En cours', 'Emprunté', 'Retourné'],
+        datasets: [{
+            data: [{{ en_cours }}, {{ emprunte }}, {{ retourne }}],
+            backgroundColor: ['#4caf50', '#007bff', '#f44336'],
+        }]
+    };
+
+    // Graphique Pie Chart des statuts des emprunts
+    const statusCtx = document.getElementById('statusChart').getContext('2d');
+    new Chart(statusCtx, {
+        type: 'pie',
+        data: statusData
+    });
+
+    // Récupérer les données pour les types d'abonnés
+    const abonneData = {
+        labels: [{% for type, count in type_abonne_counts.items() %}'{{ type }}',{% endfor %}],
+        datasets: [{
+            label: 'Nombre d\'abonnés',
+            data: [{% for type, count in type_abonne_counts.items() %}{{ count }},{% endfor %}],
+            backgroundColor: '#007bff',
+            borderColor: '#0056b3',
+            borderWidth: 1
+        }]
+    };
+
+    // Graphique Bar Chart des types d'abonnés
+    const abonneCtx = document.getElementById('abonneChart').getContext('2d');
+    new Chart(abonneCtx, {
+        type: 'bar',
+        data: abonneData,
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}
